@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="column"></div>
+        </div>
+
+        <div class="columns eight main">
+            <div class="data-list-wrapper" id="data-list-wrapper">
+                <!-- append card-list that includes card here -->
+                <div class="card-list">
+                    <div class="card">
+                        <div class="card-img" >
+                          <img src="" id="image" alt="pitch">
+                        </div>
+                      
+                        <div class="card-body">
+                          <h4 class="card-title" id="title"></h4>
+                          <p class="card-founder" id="founder"></p>
+                          <p class="card-category" id="category"></p>
+                          <p class="card-price" id="price"></p>
+                          <button class="card-button" id="button">Add To Cart</button>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let param = new URLSearchParams(window.location.search)
+        console.log(window.location.search);
+        
+        window.addEventListener("load", () => {
+            let paramObj = { 
+                image:param.get('image'),
+                title:param.get('title'),
+                founder:param.get('founder'),
+                price:param.get('price'),
+                category:param.get('category')
+        }
+        console.log(paramObj.category);
+        let image = document.getElementById("image").src = paramObj.image
+        let title = document.getElementById("title").innerHTML= paramObj.title
+        let founder = document.getElementById("founder").innerHTML = paramObj.founder
+        let price = document.getElementById("price").innerHTML = paramObj.price
+        let category = document.getElementById("category").innerHTML = paramObj.category
+        })
+        
+        button.addEventListener("click" , () => {
+            // alert("hello")
+            let CartObj = {
+                image:param.get('image'),
+                title:param.get('title'),
+                founder:param.get('founder'),
+                price:param.get('price'),
+                category:param.get('category')
+            }
+            console.log(CartObj);
+            fetch("http://localhost:3000/carts",{
+                method : 'POST',
+                headers: {
+                    'Content-Type' : "application/json",
+                },
+                body : JSON.stringify(CartObj)
+            }).then((response) => response.json()).
+              then(data => console.log("Success",data)).
+              catch((err) => console.log("Error:",err))  
+        })
+        
+    </script>
+  
+</body>
+</html>
